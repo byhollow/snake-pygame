@@ -1,0 +1,9 @@
+Hi im ByHollow and i'm learning how to use Github and python, just to enter the programming world.
+
+I'm just learning how to interact with others people projects and upload mi branch with some new usefull stuff, i hope it doesn't bother you in any way possible im just learning this World :D
+
+i will try to push this branch to your depo as "update" just to test if it works how i learn it, if it doesn'w works, i will be so sad
+
+--UPDATE PATCH NOTES--
+
+-Added a restart feature by pressing Space bar whenever the player loses
