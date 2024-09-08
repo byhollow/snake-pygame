@@ -12,7 +12,7 @@ import pygame, sys, time, random
 # Hard      ->  40
 # Harder    ->  60
 # Impossible->  120
-difficulty = 120
+difficulty = 10
 
 # Window size
 frame_size_x = 720
@@ -68,11 +68,14 @@ def game_over():
     game_window.fill(black)
     game_window.blit(game_over_surface, game_over_rect)
     show_score(0, red, 'times', 20)
+    #just like the "YOU DIE" message, this will display message to press Space to Retry
+    restart_font = pygame.font.SysFont("times new roman", 20)
+    restart_surface = restart_font.render("(PRESS SPACE TO RETRY)", True, blue)
+    restart_rect=restart_surface.get_rect()
+    restart_rect.center = (frame_size_x/2 , game_over_rect.bottom+20) #using .bottom i can place the message below
+    game_window.blit(restart_surface, restart_rect)
     pygame.display.flip()
-    time.sleep(3)
-    pygame.quit()
-    sys.exit()
-
+    
 
 # Score
 def show_score(choice, color, font, size):
@@ -85,6 +88,16 @@ def show_score(choice, color, font, size):
         score_rect.midtop = (frame_size_x/2, frame_size_y/1.25)
     game_window.blit(score_surface, score_rect)
     # pygame.display.flip()
+
+def reset_game(): #to reset the sneak and food position and values once SPACE was pressed
+    global snake_pos, snake_body, food_pos, food_spawn, direction, change_to, score
+    snake_pos = [100, 50]
+    snake_body = [[100, 50], [100-10, 50], [100-(2*10), 50]]
+    food_pos = [random.randrange(1, (frame_size_x//10)) * 10, random.randrange(1, (frame_size_y//10)) * 10]
+    food_spawn = True
+    direction = 'RIGHT'
+    change_to = direction
+    score = 0
 
 
 # Main logic
@@ -107,7 +120,9 @@ while True:
             # Esc -> Create event to quit the game
             if event.key == pygame.K_ESCAPE:
                 pygame.event.post(pygame.event.Event(pygame.QUIT))
-
+            #Space -> Create event to restart the game
+            if event.key == pygame.K_SPACE:
+                reset_game()
     # Making sure the snake cannot move in the opposite direction instantaneously
     if change_to == 'UP' and direction != 'DOWN':
         direction = 'UP'
